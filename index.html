@@ -1,0 +1,1042 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5">
+    <title>Massage Elite | Премиум массаж от лучших специалистов</title>
+    
+    <!-- FONTS & ICONS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- ANIMATE.CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <style>
+        /* ========== ГЛОБАЛЬНЫЙ СБРОС И ПЕРЕМЕННЫЕ ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --gold: #c8a27a;
+            --gold-light: #e6d2b5;
+            --gold-dark: #a88664;
+            --deep-blue: #1a2c3e;
+            --soft-beige: #faf7f2;
+            --cream: #fff9f0;
+            --charcoal: #2c3e50;
+            --white: #ffffff;
+            --black: #1e1e1e;
+            --shadow-sm: 0 5px 20px rgba(0,0,0,0.03);
+            --shadow-md: 0 10px 40px rgba(0,0,0,0.06);
+            --shadow-lg: 0 20px 60px rgba(0,0,0,0.1);
+            --gradient: linear-gradient(145deg, var(--gold), var(--gold-dark));
+            --gradient-soft: linear-gradient(135deg, #fff5eb, #fae9dc);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--soft-beige);
+            color: var(--charcoal);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        /* ========== МОДЕРНИЗИРОВАННЫЙ СКРОЛЛБАР ========== */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--soft-beige);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 20px;
+            border: 3px solid var(--soft-beige);
+        }
+
+        /* ========== КОМПЛЕКСНЫЕ АНИМАЦИИ ========== */
+        @keyframes gentleFloat {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 0 0 rgba(200, 162, 122, 0.4); }
+            70% { box-shadow: 0 0 0 20px rgba(200, 162, 122, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(200, 162, 122, 0); }
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -1000px 0; }
+            100% { background-position: 1000px 0; }
+        }
+
+        @keyframes rotateIn {
+            from { transform: rotate(-10deg) scale(0.9); opacity: 0; }
+            to { transform: rotate(0) scale(1); opacity: 1; }
+        }
+
+        .float-animation {
+            animation: gentleFloat 6s ease-in-out infinite;
+        }
+
+        .glow-animation {
+            animation: glowPulse 2s infinite;
+        }
+
+        /* ========== ПРЕЛОУДЕР ========== */
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--cream);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 1s, visibility 1s;
+        }
+
+        .preloader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .spa-lotus {
+            width: 100px;
+            height: 100px;
+            background: var(--gradient);
+            border-radius: 50%;
+            position: relative;
+            animation: rotateIn 1.5s infinite;
+        }
+
+        /* ========== НАВИГАЦИЯ ========== */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.4s;
+            border-bottom: 1px solid rgba(200, 162, 122, 0.2);
+        }
+
+        .navbar.scrolled {
+            padding: 12px 0;
+            background: rgba(255, 255, 255, 0.95);
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 40px;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: 800;
+            font-family: 'Cormorant Garamond', serif;
+            color: var(--gold-dark);
+            text-decoration: none;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .logo span {
+            color: var(--deep-blue);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--deep-blue);
+            font-weight: 600;
+            font-size: 16px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: 0.3s;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: var(--gradient);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::before {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: var(--gold);
+        }
+
+        /* ========== МЕГА-МЕНЮ ДРОПДАУН ========== */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            position: absolute;
+            top: 100%;
+            left: -30px;
+            background: white;
+            width: 280px;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: var(--shadow-lg);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            border: 1px solid rgba(200, 162, 122, 0.2);
+        }
+
+        .dropdown:hover .dropdown-content {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            text-transform: none !important;
+            font-weight: 500 !important;
+        }
+
+        /* ========== ГЕРОЙ С ИЗОБРАЖЕНИЯМИ ========== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            margin-top: 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+
+        .hero-background img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.7) blur(3px);
+            transform: scale(1.1);
+            animation: gentleFloat 20s infinite;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 60px;
+            align-items: center;
+            color: white;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 72px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 20px;
+            margin-bottom: 35px;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        .hero-image {
+            position: relative;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 30px;
+            box-shadow: var(--shadow-lg);
+            border: 5px solid rgba(255,255,255,0.3);
+            transform: rotate(5deg);
+            transition: 0.5s;
+        }
+
+        .hero-image img:hover {
+            transform: rotate(0deg) scale(1.05);
+        }
+
+        /* ========== ВКЛАДКИ МАССАЖЕЙ ========== */
+        .massage-tabs {
+            padding: 100px 0;
+            background: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--deep-blue);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 18px;
+            color: var(--gold);
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 60px;
+        }
+
+        .tabs-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 16px 36px;
+            background: transparent;
+            border: 2px solid var(--gold-light);
+            color: var(--deep-blue);
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: var(--gradient);
+            color: white;
+            border-color: var(--gold);
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .tab-pane {
+            display: none;
+            animation: fadeInUp 0.8s;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Карточки массажа */
+        .massage-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+        }
+
+        .massage-card {
+            background: var(--cream);
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: 0.5s;
+            position: relative;
+        }
+
+        .massage-card:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .massage-card img {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: 0.8s;
+        }
+
+        .massage-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .massage-info {
+            padding: 30px;
+        }
+
+        .massage-info h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            color: var(--deep-blue);
+        }
+
+        /* ========== ГАЛЕРЕЯ РАБОТ ========== */
+        .gallery {
+            padding: 100px 0;
+            background: var(--gradient-soft);
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+        }
+
+        .gallery-item {
+            position: relative;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            height: 500px;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.2);
+        }
+
+        .gallery-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+            color: white;
+            padding: 40px;
+            transform: translateY(100%);
+            transition: 0.5s;
+        }
+
+        .gallery-item:hover .gallery-overlay {
+            transform: translateY(0);
+        }
+
+        /* ========== КОМАНДА ПОЧЕТНЫХ МАССАЖИСТОВ ========== */
+        .team {
+            padding: 100px 0;
+            background: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 50px;
+            margin-top: 60px;
+        }
+
+        .team-member {
+            text-align: center;
+            position: relative;
+        }
+
+        .member-photo {
+            width: 300px;
+            height: 300px;
+            margin: 0 auto 30px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 8px solid var(--gold-light);
+            position: relative;
+            box-shadow: var(--shadow-md);
+            transition: 0.5s;
+        }
+
+        .member-photo:hover {
+            transform: scale(1.05);
+            border-color: var(--gold);
+            box-shadow: 0 0 0 15px rgba(200,162,122,0.1);
+        }
+
+        .member-photo img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.8s;
+        }
+
+        .member-photo:hover img {
+            transform: scale(1.2);
+        }
+
+        .member-name {
+            font-size: 32px;
+            margin-bottom: 10px;
+            color: var(--deep-blue);
+        }
+
+        .member-title {
+            color: var(--gold);
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .achievement {
+            background: linear-gradient(145deg, #fff9f0, #fff);
+            padding: 25px;
+            border-radius: 20px;
+            margin-top: 25px;
+            border-left: 5px solid var(--gold);
+            position: relative;
+            transition: 0.4s;
+        }
+
+        .achievement:hover {
+            transform: translateX(10px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .achievement i {
+            color: var(--gold);
+            font-size: 28px;
+            margin-right: 15px;
+        }
+
+        /* ========== КОНТАКТЫ И ЗАПИСЬ ========== */
+        .booking {
+            padding: 100px 0;
+            background: linear-gradient(145deg, var(--deep-blue), #1e3347);
+            color: white;
+        }
+
+        .booking-form {
+            max-width: 800px;
+            margin: 0 auto;
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 60px;
+            border-radius: 30px;
+        }
+
+        /* ========== ФУТЕР ========== */
+        footer {
+            background: var(--deep-blue);
+            color: white;
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 60px;
+        }
+
+        /* ========== АДАПТАЦИЯ ========== */
+        @media (max-width: 1200px) {
+            .massage-grid,
+            .team-grid,
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .massage-grid,
+            .team-grid,
+            .footer-content,
+            .gallery-grid {
+                grid-template-columns: 1fr;
+            }
+            .container {
+                padding: 0 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- ПРЕЛОУДЕР -->
+<div class="preloader" id="preloader">
+    <div class="spa-lotus"></div>
+</div>
+
+<!-- НАВИГАЦИЯ -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#" class="logo">MASSAGE<span>ELITE</span></a>
+        <ul class="nav-links">
+            <li><a href="#home">Главная</a></li>
+            <li class="dropdown">
+                <a href="#massages">Массажи <i class="fas fa-chevron-down"></i></a>
+                <div class="dropdown-content">
+                    <a href="#classic">Классический массаж</a>
+                    <a href="#sports">Спортивный массаж</a>
+                    <a href="#relax">Релакс массаж</a>
+                    <a href="#thai">Тайский массаж</a>
+                    <a href="#lpg">LPG массаж</a>
+                    <a href="#stone">Стоунтерапия</a>
+                </div>
+            </li>
+            <li><a href="#gallery">Галерея</a></li>
+            <li><a href="#team">Мастера</a></li>
+            <li><a href="#booking">Запись</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ГЛАВНАЯ СЕКЦИЯ -->
+<section id="home" class="hero">
+    <div class="hero-background">
+        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Массаж">
+    </div>
+    <div class="container">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h1 class="hero-title animate__animated animate__fadeInUp">Искусство<br>восстановления</h1>
+                <p class="hero-subtitle animate__animated animate__fadeInUp animate__delay-1s">Элитный массаж от лучших специалистов Европы. Гармония тела и души.</p>
+                <a href="#booking" class="btn" style="background: var(--gold); color: white; padding: 18px 45px; border-radius: 50px; text-decoration: none; font-weight: 700; letter-spacing: 2px; display: inline-block;">ЗАПИСАТЬСЯ</a>
+            </div>
+            <div class="hero-image animate__animated animate__fadeInRight">
+                <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Профессиональный массаж">
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ВКЛАДКИ МАССАЖЕЙ -->
+<section id="massages" class="massage-tabs">
+    <div class="container">
+        <h2 class="section-title">Виды массажа</h2>
+        <p class="section-subtitle">Выберите свою гармонию</p>
+        
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab-btn active" data-tab="tab1">Классика</button>
+                <button class="tab-btn" data-tab="tab2">Спортивный</button>
+                <button class="tab-btn" data-tab="tab3">Релакс</button>
+                <button class="tab-btn" data-tab="tab4">Тайский</button>
+                <button class="tab-btn" data-tab="tab5">LPG</button>
+                <button class="tab-btn" data-tab="tab6">Стоун</button>
+            </div>
+            
+            <div id="tab1" class="tab-pane active">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Классический массаж">
+                        <div class="massage-info">
+                            <h3>Классический массаж</h3>
+                            <p>Глубокое воздействие на мышечные ткани. Снимает зажимы и напряжение.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">3500 ₽</p>
+                        </div>
+                    </div>
+                    <div class="massage-card">
+                        <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Оздоровительный">
+                        <div class="massage-info">
+                            <h3>Оздоровительный</h3>
+                            <p>Общеукрепляющая методика для всего организма.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">3200 ₽</p>
+                        </div>
+                    </div>
+                    <div class="massage-card">
+                        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Лечебный">
+                        <div class="massage-info">
+                            <h3>Лечебный массаж</h3>
+                            <p>При остеохондрозе, радикулите, болях в спине.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">3800 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab2" class="tab-pane">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Спортивный">
+                        <div class="massage-info">
+                            <h3>Предстартовый</h3>
+                            <p>Подготовка мышц к высоким нагрузкам.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">4000 ₽</p>
+                        </div>
+                    </div>
+                    <div class="massage-card">
+                        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Восстановительный">
+                        <div class="massage-info">
+                            <h3>Восстановительный</h3>
+                            <p>После интенсивных тренировок и соревнований.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">4200 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab3" class="tab-pane">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Релакс">
+                        <div class="massage-info">
+                            <h3>SPA-релакс</h3>
+                            <p>Ароматерапия, мягкие расслабляющие техники.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">4500 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab4" class="tab-pane">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Тайский">
+                        <div class="massage-info">
+                            <h3>Тайский массаж</h3>
+                            <p>Йога-массаж, работа с энергетическими линиями.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">5000 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab5" class="tab-pane">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="LPG">
+                        <div class="massage-info">
+                            <h3>LPG массаж</h3>
+                            <p>Аппаратный вакуумный массаж для коррекции фигуры.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">3500 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="tab6" class="tab-pane">
+                <div class="massage-grid">
+                    <div class="massage-card">
+                        <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Стоунтерапия">
+                        <div class="massage-info">
+                            <h3>Стоунтерапия</h3>
+                            <p>Массаж горячими камнями. Глубокое расслабление.</p>
+                            <p style="color: var(--gold); font-size: 24px; font-weight: 700; margin-top: 20px;">4800 ₽</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ГАЛЕРЕЯ РАБОТ -->
+<section id="gallery" class="gallery">
+    <div class="container">
+        <h2 class="section-title">Наши работы</h2>
+        <p class="section-subtitle">Моменты гармонии</p>
+        
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="https://dpogti.ru/wp-content/uploads/2024/05/1-4.jpg" alt="Массаж спины">
+                <div class="gallery-overlay">
+                    <h3 style="font-size: 32px;">Массаж спины</h3>
+                    <p>Проработка мышечного корсета</p>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="https://img.championat.com/news/big/e/d/6-sluchaev-kogda-massazh-mozhet-navredit_1663150976138102311.jpg" alt="Расслабляющий массаж">
+                <div class="gallery-overlay">
+                    <h3 style="font-size: 32px;">Relax терапия</h3>
+                    <p>Полное восстановление</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- КОМАНДА ПОЧЕТНЫХ МАССАЖИСТОВ -->
+<section id="team" class="team">
+    <div class="container">
+        <h2 class="section-title">Наши легендарные мастера</h2>
+        <p class="section-subtitle">Звезды массажного искусства</p>
+        
+        <div class="team-grid">
+            <!-- ПАШОВКИН СЕРГЕЙ -->
+            <div class="team-member">
+                <div class="member-photo">
+                    <img src="https://cdn.globalsportsystems.org/awards/2022/28904/md_27569_22400.webp" alt="Пашовкин Сергей">
+                </div>
+                <h3 class="member-name">Пашовкин Сергей</h3>
+                <p class="member-title">Заслуженный массажист РФ</p>
+                <div class="achievement">
+                    <i class="fas fa-crown"></i>
+                    <strong style="font-size: 20px;">Достижение:</strong> 15 лет опыта, массажист сборной России по футболу. Золотые руки 2023!
+                    <div style="margin-top: 15px; font-style: italic;">"Размял спину самому Дзюбе!"</div>
+                </div>
+            </div>
+            
+            <!-- БЕЙБА БИГ -->
+            <div class="team-member">
+                <div class="member-photo">
+                    <img src="https://img-webcalypt.ru/uploads/admin/images/meme-templates/FF3lCtb9cif4sxvMRX7JjKKvYUYHTLr9.jpg" alt="Бейба Биг">
+                </div>
+                <h3 class="member-name">Бейба Биг</h3>
+                <p class="member-title">Мастер спорта по массажу</p>
+                <div class="achievement">
+                    <i class="fas fa-star"></i>
+                    <strong style="font-size: 20px;">Достижение:</strong> Самый сильный массаж в мире! Может размять даже буйвола.
+                    <div style="margin-top: 15px; font-style: italic;">"Рекордсмен книги Гиннесса по силе нажатия!"</div>
+                </div>
+            </div>
+            
+            <!-- ДЕДУЛЬКА ПЕРДУЛЬКА -->
+            <div class="team-member">
+                <div class="member-photo">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQO9AK7L0a1HxtKzaetFiRQS0JRmM0C6Y0f9w&s" alt="Дедулька Пердулька">
+                </div>
+                <h3 class="member-name">Дедулька Пердулька</h3>
+                <p class="member-title">Народный целитель</p>
+                <div class="achievement">
+                    <i class="fas fa-hand-sparkles"></i>
+                    <strong style="font-size: 20px;">Достижение:</strong> 50 лет стажа. Массаж делает... дыханием! Уникальная техника "Ветерок".
+                    <div style="margin-top: 15px; font-style: italic;">"Вылечил радикулит президенту!"</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ЗАПИСЬ -->
+<section id="booking" class="booking">
+    <div class="container">
+        <h2 style="text-align: center; font-size: 48px; color: white; margin-bottom: 20px;">Запись на массаж</h2>
+        <p style="text-align: center; color: var(--gold-light); font-size: 18px; margin-bottom: 60px;">Оставьте заявку и мы подберем идеальную программу</p>
+        
+        <div class="booking-form">
+            <form>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                    <input type="text" placeholder="Ваше имя" style="padding: 18px; border: none; border-radius: 15px; background: rgba(255,255,255,0.2); color: white; font-size: 16px;">
+                    <input type="tel" placeholder="Телефон" style="padding: 18px; border: none; border-radius: 15px; background: rgba(255,255,255,0.2); color: white; font-size: 16px;">
+                </div>
+                <select style="width: 100%; padding: 18px; margin: 30px 0; border: none; border-radius: 15px; background: rgba(255,255,255,0.2); color: white; font-size: 16px;">
+                    <option style="color: black;">Выберите массаж</option>
+                    <option style="color: black;">Классический</option>
+                    <option style="color: black;">Спортивный</option>
+                    <option style="color: black;">Тайский</option>
+                    <option style="color: black;">LPG</option>
+                </select>
+                <button type="submit" style="width: 100%; padding: 20px; background: var(--gold); border: none; border-radius: 15px; color: white; font-weight: 700; font-size: 18px; cursor: pointer; transition: 0.3s;">ЗАПИСАТЬСЯ БЕСПЛАТНО</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ФУТЕР -->
+<footer>
+    <div class="container">
+        <div class="footer-content">
+            <div>
+                <h3 style="font-size: 28px; margin-bottom: 25px; color: var(--gold);">MASSAGE ELITE</h3>
+                <p style="opacity: 0.8;">Премиум массаж в центре Москвы. Работаем 24/7.</p>
+            </div>
+            <div>
+                <h4 style="font-size: 20px; margin-bottom: 25px;">Навигация</h4>
+                <ul style="list-style: none; opacity: 0.8;">
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: white; text-decoration: none;">Главная</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: white; text-decoration: none;">Массажи</a></li>
+                    <li style="margin-bottom: 12px;"><a href="#" style="color: white; text-decoration: none;">Мастера</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 style="font-size: 20px; margin-bottom: 25px;">Контакты</h4>
+                <p style="opacity: 0.8; margin-bottom: 10px;">+7 (999) 123-45-67</p>
+                <p style="opacity: 0.8;">info@massage-elite.ru</p>
+            </div>
+            <div>
+                <h4 style="font-size: 20px; margin-bottom: 25px;">Соцсети</h4>
+                <div style="display: flex; gap: 20px;">
+                    <i class="fab fa-instagram" style="font-size: 28px; color: var(--gold);"></i>
+                    <i class="fab fa-telegram" style="font-size: 28px; color: var(--gold);"></i>
+                    <i class="fab fa-whatsapp" style="font-size: 28px; color: var(--gold);"></i>
+                </div>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 60px; padding-top: 30px; border-top: 1px solid rgba(255,255,255,0.1); opacity: 0.6;">
+            <p>© 2024 Massage Elite. Все права защищены.</p>
+        </div>
+    </div>
+</footer>
+
+<!-- СКРИПТЫ -->
+<script>
+    // Прелоудер
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            document.getElementById('preloader').classList.add('hidden');
+        }, 1000);
+    });
+
+    // Навигация скролл
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            document.getElementById('navbar').classList.add('scrolled');
+        } else {
+            document.getElementById('navbar').classList.remove('scrolled');
+        }
+    });
+
+    // Табы массажа
+    const tabBtns = document.querySelectorAll('.tab-btn');
+    const tabPanes = document.querySelectorAll('.tab-pane');
+
+    tabBtns.forEach(btn => {
+        btn.addEventListener('click', function() {
+            // Убираем активный класс у всех кнопок
+            tabBtns.forEach(b => b.classList.remove('active'));
+            // Добавляем активный класс текущей кнопке
+            this.classList.add('active');
+            
+            // Скрываем все панели
+            tabPanes.forEach(pane => pane.classList.remove('active'));
+            
+            // Показываем выбранную панель
+            const tabId = this.getAttribute('data-tab');
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    // Плавный скролл к секциям
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Анимация достижений при наведении
+    const achievements = document.querySelectorAll('.achievement');
+    achievements.forEach(achievement => {
+        achievement.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateX(10px) scale(1.02)';
+            this.style.boxShadow = '0 20px 40px rgba(200,162,122,0.3)';
+        });
+        
+        achievement.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateX(0) scale(1)';
+            this.style.boxShadow = 'var(--shadow-md)';
+        });
+    });
+</script>
+
+<!-- ДОПОЛНИТЕЛЬНЫЕ СТИЛИ ДЛЯ ФОРМ -->
+<style>
+    .booking-form input::placeholder {
+        color: rgba(255,255,255,0.7);
+    }
+    
+    .booking-form select option {
+        background: var(--deep-blue);
+        color: white;
+    }
+    
+    .btn {
+        background: var(--gradient);
+        color: white;
+        padding: 18px 45px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 700;
+        letter-spacing: 2px;
+        display: inline-block;
+        transition: 0.4s;
+        border: none;
+        cursor: pointer;
+    }
+    
+    .btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 35px rgba(200,162,122,0.5);
+    }
+    
+    .member-photo {
+        border: 8px solid var(--gold-light);
+        transition: 0.5s;
+    }
+    
+    .member-photo:hover {
+        border-color: var(--gold);
+        transform: rotate(5deg) scale(1.05);
+    }
+</style>
+
+</body>
+</html>
